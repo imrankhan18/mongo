@@ -97,48 +97,12 @@ $container->set(
     function () {
         $mongo = new \MongoDB\Client("mongodb://mongo", array("username" => 'root', "password" => "password123"));
 
-        return $mongo->test->users;
+        return $mongo;
     },
     true
 );
-// 
 
 $application = new Application($container);
-// $container->set(
-//     'db',
-//     function () {
-//         $eventsManager = new Manager();
-//         $adapter = new Stream('../app/logs/db.log');
-//         $logger  = new Logger(
-//             'messages',
-//             [
-//                 'main' => $adapter,
-//             ]
-//         );
-
-//         $eventsManager->attach(
-//             'db:afterQuery',
-//             function ($event, $connection) use ($logger) {
-//                 $logger->info(
-//                     $connection->getSQLStatement()
-//                 );
-//             }
-//         );
-
-//         $connection = new Mysql(
-//             [
-//                 'host'     => 'mysql-server',
-//                 'username' => 'root',
-//                 'password' => 'secret',
-//                 'dbname'   => 'api',
-//             ]
-//         );
-
-//         $connection->setEventsManager($eventsManager);
-
-//         return $connection;
-//     }
-// );
 
 $eventsManager = new EventsManager();
 $container->set(
@@ -151,29 +115,6 @@ $container->set(
         return $eventsManager;
     }
 );
-// 
-
-
-
-
-
-// $container->set(
-//     'db',
-//     function () {
-//         return new Mysql(
-//             [
-//                 'host'     => 'mysql-server',
-//                 'username' => 'root',
-//                 'password' => 'secret',
-//                 'dbname'   => 'phalt',
-//                 ]
-//             );
-//         }
-// );
-
-
-
-
 
 $container = new Di();
 
@@ -214,9 +155,6 @@ $container->set(
         return $logger;
     }
 );
-
-
-
 
 try {
     // Handle the request
