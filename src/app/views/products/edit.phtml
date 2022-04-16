@@ -1,0 +1,42 @@
+<?php
+
+
+// $edit=json_decode(json_encode($edit, true));
+// echo "<pre>";
+// print_r($data['metadata']);
+// die;
+?>
+<form action="/products/update/" method="post">
+    <input type="hidden" name="id" value="<?php print_r($edit->_id . ''); ?>">
+    <p>
+        <label for="name">Product Name:</label>
+        <input type="text" name="name" value="<?php print_r($edit->name);  ?>">
+    </p>modalBtn
+        <label for="stock">Stock:</label>
+        <input type="text" name="stock" value="<?php print_r($edit->stock); ?>">
+    </p>
+    <p>
+    <label for="variations">Metadata</label> 
+    <?php foreach($data as $k => $v) { ?>
+        <input type="text" name="meatadata[]" value="<?php print_r($k); ?>">
+    <input type="text" name="meatadata[]" value="<?php print_r($v); ?>">
+     <?php }?>
+    </p>
+    <p>
+        <?php if (isset($var))
+            foreach ($var as $key => $value) {
+        ?>
+            <label for="variations">Variations</label>
+            <input type="text" name="field1[]" value="<?php print_r($key); ?>">
+            <?php foreach ($value as $k => $val) { ?>
+    <p>
+        <input type="text" name="field2[]" value="<?php print_r($k); ?>">
+        <input type="text" name="field3[]" value="<?php print_r($val); ?>">
+    </p>
+<?php }
+            } ?>
+</p>
+<button class="btn btn-primary" type="submit">Update</button>
+</form>
+
+
