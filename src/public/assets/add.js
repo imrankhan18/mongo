@@ -61,4 +61,3 @@ removevariations.onclick = function () {
     variations.removeChild(input_tags[input_tags.length - 1]);
   }
 };
-

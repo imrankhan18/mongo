@@ -1,0 +1,43 @@
+<?php
+// echo "<pre>";
+// foreach($products as $key => $val)
+// {
+//     print_r($val);
+// }
+
+// die;
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="text-align:center; margin-top:25px;">
+
+    <form action="/orders/addOrder/" method="post">
+        <h3>Product Name</h3>
+        <select name="pname" id="">
+
+            <?php
+            foreach ($products as $k => $v) {
+            ?>
+                <option value="<?php echo ($v['name'])?>" ><?php print_r($v['name'])  ?>
+                </option> <?php } ?>
+
+        </select>
+        <h3>Customer Name</h3>
+        <input type="text" value="" name="customername" placeholder="customer name">
+        <h3>Quantity</h3>
+        <input type="number" value="" name="qty" placeholder="quantity">
+        <p>
+            <button>Add Order</button>
+        </p>
+    </form>
+</body>
+
+</html>

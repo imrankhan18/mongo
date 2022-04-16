@@ -12,15 +12,15 @@
         <label for="name">Product Name:</label>
         <input type="text" name="name" value="<?php print_r($edit->name);  ?>">
     </p>modalBtn
-        <label for="stock">Stock:</label>
-        <input type="text" name="stock" value="<?php print_r($edit->stock); ?>">
+    <label for="stock">Stock:</label>
+    <input type="text" name="stock" value="<?php print_r($edit->stock); ?>">
     </p>
     <p>
-    <label for="variations">Metadata</label> 
-    <?php foreach($data as $k => $v) { ?>
-        <input type="text" name="meatadata[]" value="<?php print_r($k); ?>">
-    <input type="text" name="meatadata[]" value="<?php print_r($v); ?>">
-     <?php }?>
+        <label for="variations">Metadata</label>
+        <?php foreach ($data as $k => $v) { ?>
+            <input type="text" name="meatadata[]" value="<?php print_r($k); ?>">
+            <input type="text" name="meatadata[]" value="<?php print_r($v); ?>">
+        <?php } ?>
     </p>
     <p>
         <?php if (isset($var))
@@ -38,5 +38,3 @@
 </p>
 <button class="btn btn-primary" type="submit">Update</button>
 </form>
-
-
