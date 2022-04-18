@@ -1,5 +1,5 @@
 <?php
-$list = $this->mongo->store->products->find();
+// $list = $this->mongo->store->products->find();
 
 // echo "<pre>";
 // foreach($list as $v)
@@ -51,6 +51,7 @@ $list = $this->mongo->store->products->find();
   <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Home</a>
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/products/">Add Products </a>
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/orders/">Add Orders </a>
     <form action="/products/productslist/" method="post">
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" name="search">
       <div class="navbar-nav">
@@ -102,7 +103,18 @@ $list = $this->mongo->store->products->find();
         $.ajax({
           'url': 'http://localhost:8080/products/quick/',
           'method': 'POST',
-          'data': {product name
+          'data': {
+            'id': id
+          },
+          datatype: 'JSON'
+        }).done(function(quick) {
+          quickData = $.parseJSON(quick);
+          console.log(quickData);
+          $("#product_name").html('Product Name = ' + quickData.name);
+          $("#category").html('Category = ' + quickData.category);
+          $("#price").html('Price = ' + quickData.price);
+          $("#stock").html('Stock = ' + quickData.stock);
+          var md = '';
           for ($i in quickData.metadata) {
             md += `<h3>` + $i + `: ` + quickData.metadata[$i] + ` </h3>`;
           }

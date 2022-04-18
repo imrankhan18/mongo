@@ -1,71 +1,83 @@
-<?php 
+<?php
 // echo "<pre>";
-// print_r($orderlist['product name']);
+// foreach($orderlist as $key => $value)
+// {
+  // print_r($data);
+// }
+
 // die;
 ?>
- <header class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow">
-     <h1 class="text-2xl font-bold text-gray-700"> Orders</h1> 
-     <a class="navbar-brand col-md-3 col-lg me-0 px-3" href="/orders/">Add Orders </a>
-     
-         <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" name="search">
+
+
+<header class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow">
+  <h1 class="text-2xl font-bold text-gray-700"> Orders</h1>
+  <a class="navbar-brand col-md-3 col-lg me-0 px-3" href="/orders/">Add Orders </a>
+
+  <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" name="search">
          <div class="navbar-nav">
              
              <button>Search</button>
              
             </div> -->
-        </header>
-      
+</header>
+
 <form action="/orders/orderlist/" method="post">
-    <select name="status" id="">
-        <option value="paid">Paid</option>
-        <option value="processing">Processing</option>
-        <option value="dispatched">Dispatched</option>
-        <option value="shipped">Shipped</option>
-        <option value="refunded">Refunded</option>
-        
-    </select>
-    <select name="dropdowndate" id="">
-        <option value="today">Today</option>
-        <option value="this week">This week</option>
-        <option value="this month">This month</option>
-        
-        
-    </select>
-    <!-- <button type="button" class="btn btn-primary">Today</button>
+  <select name="status" id="">
+  <option value="">Select</option>
+    <option value="paid">Paid</option>
+    <option value="processing">Processing</option>
+    <option value="dispatched">Dispatched</option>
+    <option value="shipped">Shipped</option>
+    <option value="refunded">Refunded</option>
+
+  </select>
+  <select name="dropdowndate" id="">
+  <option value="">Select</option>
+    <option value="today">Today</option>
+    <option value="this week">This week</option>
+    <option value="this month">This month</option>
+
+
+  </select>
+  <!-- <button type="button" class="btn btn-primary">Today</button>
     <button type="button" class="btn btn-secondary">This week</button>
     <button type="button" class="btn btn-primary">This month</button> -->
-    <button type="button" class="btn btn-secondary" onclick=addField()>Custom</button>
-    <div id="field"></div>
-    <button type="">Submit</button>
+  <button type="button" class="btn btn-secondary" onclick=addField()>Custom</button>
+  <div id="field"></div>
+  <button type="">filter</button>
 </form>
 <div class="px-4 mb-2 lg:px-0">
 
 </div>
+
 <div class="grid grid-cols-1 gap-4 md:grid-cols-4 sm:grid-cols-2 ">
-  
+
   <div class="w-full col-span-2 row-span-2 px-4 lg:px-0">
-    
+
     <div class="p-3 bg-white rounded shadow-md">
-      <div class="">
-        <div class="relative w-full mb-3 h-62 lg:mb-0">
-          <img src="https://cdn.pixabay.com/photo/2018/02/25/07/15/food-3179853__340.jpg" alt="Just a flower"
-            class="object-fill w-full h-full rounded">
-        </div>
-        <div class="flex-auto p-2 justify-evenly">
-          <div class="flex flex-wrap ">
-            <div class="flex items-center justify-between w-full min-w-0 ">
-              <h2 class="mr-auto text-lg cursor-pointer hover:text-gray-900 ">
-                <b>Product Name : </b><?php print_r($orderlist['product name']); ?>
-              </h2>
-              <h2 class="mr-auto text-lg cursor-pointer hover:text-gray-900 ">
-                <b>Customer Name : </b><?php print_r($orderlist['customer name']); ?>
-              </h2>
-            </div>
+      <?php if(isset($orderlist)) foreach ($orderlist as $key => $value) { ?>
+        <div class="">
+          <div class="relative w-full mb-3 h-62 lg:mb-0">
+            <img src="https://cdn.pixabay.com/photo/2018/02/25/07/15/food-3179853__340.jpg" alt="Just a flower" class="object-fill w-full h-full rounded">
           </div>
-          <div class="mt-1 text-xl font-semibold">Quantity:<b><?php print_r($orderlist['quantity']); ?></b></div>
+
+          <div class="flex-auto p-2 justify-evenly">
+            <div class="flex flex-wrap ">
+              <div class="flex items-center justify-between w-full min-w-0 ">
+                <h2 class="mr-auto text-lg cursor-pointer hover:text-gray-900 ">
+                  <b>Product Name :</b> <?php echo $value['product name']; ?> <?php  ?>
+                </h2>
+                <h2 class="mr-auto text-lg cursor-pointer hover:text-gray-900 ">
+                  <b>Customer Name :</b><?php echo $value['customer name']; ?> <?php  ?>
+                </h2>
+              </div>
+            </div>
+            <div class="mt-1 text-xl font-semibold">Quantity:<b><?php echo $value['quantity'];  ?></b></div>
+
+          </div>
+        <?php } ?>
 
         </div>
-      </div>
     </div>
   </div>
 </div>

@@ -23,6 +23,7 @@ class ProductsController extends Controller
 
         $productdata = $this->request->getPost();
 
+
         if (count($productdata) > 0) {
             $data = array();
             $data = array_merge($data, ["name" => $productdata['name']]);
@@ -47,11 +48,12 @@ class ProductsController extends Controller
             }
             $data = array_merge($data, ['metadata' => $metadat]);
             $data = array_merge($data, ['variations' => $variations]);
-            $products = new Products();
-            $products->insert($data);
             // echo "<pre>";
             // print_r($data);
             // die;
+            $products = new Products();
+            $products->insert($data);
+
             $this->response->redirect('/products/productslist/');
         }
     }
@@ -154,15 +156,15 @@ class ProductsController extends Controller
     {
         $id = $this->request->getPost('id');
         $update1 = $this->request->get();
-        // echo "<pre>";
-        // print_r($update1['meatadata']);
-        // die;
 
-        $update2 = array();
-        $update2 = array_merge($update2, ['name' => $update1['name']]);
-        $update2 = array_merge($update2, ['category' => $update1['cname']]);
-        $update2 = array_merge($update2, ['price' => $update1['price']]);
-        $update2 = array_merge($update2, ['stock' => $update1['stock']]);
+        // echo "<pre>";
+        // print_r($update1);
+        // die;
+        // $update2 = array();
+        // $update2 = array_merge($update2, ['name' => $update1['name']]);
+        // $update2 = array_merge($update2, ['category' => $update1['cname']]);
+        // $update2 = array_merge($update2, ['price' => $update1['price']]);
+        // $update2 = array_merge($update2, ['stock' => $update1['stock']]);
         $variations = array();
         for ($i = 0; $i < count($update1['field1']); $i++) {
             if (array_key_exists($update1['field1'][$i], $variations)) {
@@ -173,19 +175,26 @@ class ProductsController extends Controller
                 $variations = array_merge($variations, $var);
             }
         }
+        // echo "<pre>";
+        // print_r($variations);
+        // die;
+        $metadat = array();
+        for ($i = 0; $i < count($update1['fields']); $i++) {
+            $label = [$update1['fields'][$i] => $update1['value'][$i]];
+            $metadat = array_merge($metadat, $label);
+        }
 
-        $update2 = array_merge($update2, $variations);
 
         $this->mongo->store->products->updateOne(
             ['_id' => new mongoDB\BSON\ObjectId("$id")],
             [
                 '$set' => [
-                    'name' => $update2['name'],
-                    'category' => $update2['price'],
-                    'price' => $update2['price'],
-                    'stock' => $update2['stock'],
-                    'metadata' => $update1['meatadata'],
-                    'variations' => $update2['color'],
+                    'name' => $update1['name'],
+                    'category' => $update1['cname'],
+                    'price' => $update1['price'],
+                    'stock' => $update1['stock'],
+                    'metadata' => $metadat,
+                    'variations' => $variations,
                 ]
             ]
         );

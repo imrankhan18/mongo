@@ -9,24 +9,62 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.container').on('change', '#variations', function() {
+                var id = $(this).val();
+                // console.log(cid);
+                $.ajax({
+                    type: 'POST',
+                    url: '/orders/getVar',
+                    data: {
+                        'id': id
+                    },
+                    success: function(html) {
+                        $('#var').html(html);
+
+                    }
+                });
+            });
+
+
+        });
+    </script>
 </head>
 
 <body style="text-align:center; margin-top:25px;">
-
+<div class="container">
     <form action="/orders/addOrder/" method="post">
         <h3>Product Name</h3>
-        <select name="pname" id="">
+        <select name="pname" id="variations">
+        <option value="" selected>Select</option>
+            <?php
+            foreach ($products as $k => $v) {
+            ?>
+            
+                <option value="<?php echo ($v['_id']['$oid']) ?>"><?php print_r($v['name'])  ?>
+                
+                </option> 
+                <?php } ?>
+
+        </select>
+        <h3>Variations and default Price</h3>
+        <p id="var"></p>
+      
+        <h3>Price</h3>
+        <select name="price" id="">
 
             <?php
             foreach ($products as $k => $v) {
             ?>
-                <option value="<?php echo ($v['name'])?>" ><?php print_r($v['name'])  ?>
+                <option value="<?php print_r($v['price']) ?>"><?php print_r($v['price'])  ?>
                 </option> <?php } ?>
 
         </select>
@@ -37,7 +75,10 @@
         <p>
             <button>Add Order</button>
         </p>
-    </form>
-</body>
 
+    </form>
+ 
+</div> 
+</body>
+ 
 </html>
