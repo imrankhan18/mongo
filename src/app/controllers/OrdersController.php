@@ -29,7 +29,7 @@ class OrdersController extends Controller
         $arr = array_merge($arr, ['customer name' => $order['customername']]);
         $arr = array_merge($arr, ['quantity' => $order['qty']]);
         $arr = array_merge($arr, ['price' => $order['price']]);
-        $arr = array_merge($arr, ['variations' => $order['variations']]);
+        $arr = array_merge($arr, ['variations' => $order['var']]);
         $arr = array_merge($arr, ['date' => $date]);
         $arr = array_merge($arr, ['time' => $time]);
         $arr = array_merge($arr, ['status' => 'paid']);
@@ -39,22 +39,14 @@ class OrdersController extends Controller
     }
     public function orderlistAction()
     {
-        $orderlist = $this->mongo->store->orders->find();
-        foreach ($orderlist as $k => $val) {
-            $value = $val;
-            $olist[] = json_decode(json_encode($value), true);
-        }
         $filter = $this->request->getPost();
         $order = new Orders;
-        if (($filter['status']) != '') {
-            $result = $order->search($filter["status"], $filter["from_date"], $filter["to_date"]);
+        if (($filter['from date']) != '') {
+            $result = $order->search($filter["status"], $filter["from date"], $filter["to date"]);
         } else {
             if ($filter['dropdowndate'] == "today") {
 
                 $result = $order->search($filter["status"], date("Y-m-d"), date("Y-m-d"));
-                echo "<pre>";
-                print_r(($result->toArray()));
-                die;
             } elseif ($filter['dropdowndate'] == "this week") {
 
                 $result = $order->search($filter["status"], date("Y-m-d"), date("Y-m-d", strtotime("+6 day")));
@@ -73,7 +65,7 @@ class OrdersController extends Controller
         // echo "<pre>";
         // 
         // die;
-        echo "<select>";
+        echo "<select name='var'>";
 
         foreach ($cursor as $key => $value) {
 
@@ -84,11 +76,26 @@ class OrdersController extends Controller
                     echo ('<option>' . $kk . ' ' . $vv . '</option>');
                 }
             }
+        };
+        echo "</select>";
+        // echo "<select>";
+        // print_r('<option>'.$cursor->price.'<option>');
+        // echo "</select>";
+    }
+    public function statusAction()
+    {
+        $id = $this->request->getPost('id');
+        $status = $this->request->getPost('status');
+        if ($this->request->getPost('status')) {
+            $this->mongo->store->orders->updateOne(
+                ['_id' => new MongoDB\BSON\ObjectId($id)],
+                [
+                    '$set' => [
+                        'status' => $status,
+                    ]
+                ]
+            );
+            $this->response->redirect('/orders/orderlist/');
         }
-;
-        echo "</select>";
-        echo "<select>";
-        print_r('<option>'.$cursor->price.'<option>');
-        echo "</select>";
     }
 }

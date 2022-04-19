@@ -2,7 +2,7 @@
 // echo "<pre>";
 // foreach($orderlist as $key => $value)
 // {
-  // print_r($data);
+//   print_r($value->status);
 // }
 
 // die;
@@ -23,7 +23,7 @@
 
 <form action="/orders/orderlist/" method="post">
   <select name="status" id="">
-  <option value="">Select</option>
+    <option value="">Select</option>
     <option value="paid">Paid</option>
     <option value="processing">Processing</option>
     <option value="dispatched">Dispatched</option>
@@ -32,7 +32,7 @@
 
   </select>
   <select name="dropdowndate" id="">
-  <option value="">Select</option>
+    <option value="">Select</option>
     <option value="today">Today</option>
     <option value="this week">This week</option>
     <option value="this month">This month</option>
@@ -55,7 +55,7 @@
   <div class="w-full col-span-2 row-span-2 px-4 lg:px-0">
 
     <div class="p-3 bg-white rounded shadow-md">
-      <?php if(isset($orderlist)) foreach ($orderlist as $key => $value) { ?>
+      <?php if (isset($orderlist)) foreach ($orderlist as $key => $value) { ?>
         <div class="">
           <div class="relative w-full mb-3 h-62 lg:mb-0">
             <img src="https://cdn.pixabay.com/photo/2018/02/25/07/15/food-3179853__340.jpg" alt="Just a flower" class="object-fill w-full h-full rounded">
@@ -65,7 +65,7 @@
             <div class="flex flex-wrap ">
               <div class="flex items-center justify-between w-full min-w-0 ">
                 <h2 class="mr-auto text-lg cursor-pointer hover:text-gray-900 ">
-                  <b>Product Name :</b> <?php echo $value['product name']; ?> <?php  ?>
+                  <b>Product ID :</b> <?php echo $value['product name']; ?> <?php  ?>
                 </h2>
                 <h2 class="mr-auto text-lg cursor-pointer hover:text-gray-900 ">
                   <b>Customer Name :</b><?php echo $value['customer name']; ?> <?php  ?>
@@ -74,6 +74,17 @@
             </div>
             <div class="mt-1 text-xl font-semibold">Quantity:<b><?php echo $value['quantity'];  ?></b></div>
 
+            <form action="/orders/status/" method="post">
+              <input type="hidden"  name="id" value="<?php echo $value->_id ?>">
+              <select name="status" onchange="this.form.submit()">
+                <option value="<?php echo $value->status ?>" selected disabled hidden ><?php echo $value->status ?></option>
+                <option value="paid">paid</option>
+                <option value="processing">Processing</option>
+                <option value="dispatched">Dispatched</option>
+                <option value="shipped">Shipped</option>
+                <option value="refunded">Refunded</option>
+              </select>
+            </form>
           </div>
         <?php } ?>
 

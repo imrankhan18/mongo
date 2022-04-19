@@ -69,6 +69,7 @@ class ProductsController extends Controller
         $display = '';
         if ($search['search'] != "") {
             foreach ($list as $key => $value) {
+                
                 if ($search['search'] == $value->name) {
                     $display .= '<div class="card">
             <h3><b>ProductName: </b>' . $value->name . '</h3>
@@ -82,6 +83,7 @@ class ProductsController extends Controller
             <a class="btn btn-danger" href="/products/delete/?id=' . $value['_id'] . '" >Delete</a>
             </p>
         </div>';
+        
                 }
             }
         } else {
@@ -99,11 +101,13 @@ class ProductsController extends Controller
             <a class="btn btn-primary" href="/products/edit/?id=' . $value['_id'] . '" >Edit</a>
             <a class="btn btn-danger" href="/products/delete/?id=' . $value['_id'] . '" >Delete</a>
             </p>
+            
         </div>';
             }
         }
 
         $this->view->display = $display;
+        $this->view->id=$value;
         // $this->view->data=$list;
     }
     /**
